@@ -37,6 +37,28 @@ base_model: ./models_hf/7B
 
 <!-- Address questions around how the model is intended to be used, including the foreseeable users of the model and those affected by the model. -->
 
+```
+To merge finetuned model with original base model
+
+# Reload model in FP16 and merge it with LoRA weights
+load_model = AutoModelForCausalLM.from_pretrained(
+    base_model,
+    low_cpu_mem_usage=True,
+    return_dict=True,
+    torch_dtype=torch.float16,
+    device_map={"": 0},
+)
+
+model = PeftModel.from_pretrained(load_model, new_model)
+model = model.merge_and_unload()
+
+# Reload tokenizer to save it
+tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
+tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+tokenizer.pad_token = tokenizer.eos_token
+tokenizer.padding_side = "right"
+```
+
 ### Direct Use
 
 <!-- This section is for the model use without fine-tuning or plugging into a larger ecosystem/app. -->
