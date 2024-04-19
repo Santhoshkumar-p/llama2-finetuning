@@ -51,7 +51,8 @@ The most pressing topics regarding regulation of AI are:
 - China's AI regulations are a good example of how to balance the need for innovation with the need for regulation.
 #### Fine-Tuned Output:
 China is a leading player in AI development and innovation, and its government is aware of this and wants to control this to benefit itself more efficiently. Other nations should pay close attention to China’s new AI regulations because they may serve as a template for how a government can control information and data more efficiently.
-![image](https://github.com/Santhoshkumar-p/llama2-finetuning/assets/24734488/146585bc-50ff-4ece-a774-edf1a387918e)
+![image](https://github.com/Santhoshkumar-p/llama2-finetuning/assets/24734488/79d4fe89-45d4-4bbd-a59d-6b1e089da98e)
+
 
 ## RAG & Fine-Tuning
 - **RAG Framework:** LangChain
