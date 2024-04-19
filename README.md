@@ -42,7 +42,7 @@ The most pressing topics regarding regulation of AI are:
 
 ## Example Chain-of-Thought Prompting
 ### Input:
-**Question:** Why should international discourse take China's AI regulations seriously?
+**Question:** Why should international discourse take China's AI regulations seriously?</br>
 **Prompt:**
 1. First, summarize China's current state of affairs regarding regulation of information technology, data, and AI development.
 2. Second, discuss China's most recent legislative changes regarding AI.
