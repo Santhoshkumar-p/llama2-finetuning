@@ -1,226 +1,74 @@
----
-library_name: peft
-base_model: ./models_hf/7B
----
+# AI PolicyChat
+## Introduction Motivation:
+Develop a fine-tuned Large Language Model that is capable of understanding and answering questions related to AI policy.
+
+## Challenges:
+- Provide insightful, contextually relevant responses
+- Outperform the base Llama-2-7B model
+- Effective Prompt Engineering
+- Effective Fine-Tuning
+
+## Methodology
+- **Data Collection and Preparation:**
+  - Policy Document subsets: International, US Government, Think-Tanks, Organizations, Forums
+- **Prompting Techniques:**
+  - Application to base and fine-tuned models
+- **Fine-Tuning and Model Development:**
+  - PEFT, Hyperparameter selection
+- **Model Evaluation:**
+  - Automatic and Human Evaluation
+
+## Prompt Engineering Methods:
+- Zero-Shot
+- One-Shot
+- Few-Shot
+- Negative Prompting
+- Chain-of-Thought Prompting
+
+## Example Zero-Shot Prompting
+### Input:
+**Question:** List the most pressing topics regarding regulation of AI.
+#### Base Output:
+The most pressing topics regarding regulation of AI are:
+1. Privacy and data protection: AI systems can collect and process vast amounts of personal data, which raises concerns about privacy and data protection.
+2. Bias and discrimination: AI systems can perpetuate existing biases and discrimination, which can have a disproportionate impact on certain groups of people.
+3. Accountability and transparency: AI systems can
+#### Fine-Tuned Output:
+- Defining AI accurately
+- The role of AI in the future of work
+- AI's impact on competition and pricing
+- The role of AI in the next generation of digital platforms
+- AI and the future of automation
+
+## Example Chain-of-Thought Prompting
+### Input:
+**Question:** Why should international discourse take China's AI regulations seriously?
+**Prompt:**
+1. First, summarize China's current state of affairs regarding regulation of information technology, data, and AI development.
+2. Second, discuss China's most recent legislative changes regarding AI.
+3. Then, state why other nations should pay close attention to China's new AI regulations.
+#### Base Model Output:
+- China's AI regulations are a good example of how to balance the need for innovation with the need for regulation.
+#### Fine-Tuned Output:
+China is a leading player in AI development and innovation, and its government is aware of this and wants to control this to benefit itself more efficiently. Other nations should pay close attention to China’s new AI regulations because they may serve as a template for how a government can control information and data more efficiently.
+
+## RAG & Fine-Tuning
+- **RAG Framework:** LangChain
+- **Embedding:** HuggingFace Embeddings(sentence-transformers/all-MiniLM-L6-v2)
+- **Context Size:** 4 Chunks
+- **Vector Store:** In-memory ChromaDB
+- **PEFT:** QLoRA (r=8)
+- **Quantization:** 4 bit
+- **Epochs:** 10
+<img width="938" alt="image" src="https://github.com/Santhoshkumar-p/llama2-finetuning/assets/24734488/83aa63d8-5b6b-4ad5-a5ce-5a62b9ba2ac1">
+
+
+## Evaluation - Automatic Metrics
+- BLEU
+- ROUGE
+- BERT Score
+
+## Human Evaluation Criteria
+- **Relevance:** Does the response address the prompt?
+- **Informativeness:** Does the response provide accurate and relevant information?
 
-# Model Card for Model ID
-
-<!-- Provide a quick summary of what the model is/does. -->
-
-
-
-## Model Details
-
-### Model Description
-
-<!-- Provide a longer summary of what this model is. -->
-
-
-
-- **Developed by:** [More Information Needed]
-- **Funded by [optional]:** [More Information Needed]
-- **Shared by [optional]:** [More Information Needed]
-- **Model type:** [More Information Needed]
-- **Language(s) (NLP):** [More Information Needed]
-- **License:** [More Information Needed]
-- **Finetuned from model [optional]:** [More Information Needed]
-
-### Model Sources [optional]
-
-<!-- Provide the basic links for the model. -->
-
-- **Repository:** [More Information Needed]
-- **Paper [optional]:** [More Information Needed]
-- **Demo [optional]:** [More Information Needed]
-
-## Uses
-
-<!-- Address questions around how the model is intended to be used, including the foreseeable users of the model and those affected by the model. -->
-
-```
-To merge finetuned model with original base model
-
-# Reload model in FP16 and merge it with LoRA weights
-load_model = AutoModelForCausalLM.from_pretrained(
-    base_model,
-    low_cpu_mem_usage=True,
-    return_dict=True,
-    torch_dtype=torch.float16,
-    device_map={"": 0},
-)
-
-model = PeftModel.from_pretrained(load_model, new_model)
-model = model.merge_and_unload()
-
-# Reload tokenizer to save it
-tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
-tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-tokenizer.pad_token = tokenizer.eos_token
-tokenizer.padding_side = "right"
-```
-
-### Direct Use
-
-<!-- This section is for the model use without fine-tuning or plugging into a larger ecosystem/app. -->
-
-[More Information Needed]
-
-### Downstream Use [optional]
-
-<!-- This section is for the model use when fine-tuned for a task, or when plugged into a larger ecosystem/app -->
-
-[More Information Needed]
-
-### Out-of-Scope Use
-
-<!-- This section addresses misuse, malicious use, and uses that the model will not work well for. -->
-
-[More Information Needed]
-
-## Bias, Risks, and Limitations
-
-<!-- This section is meant to convey both technical and sociotechnical limitations. -->
-
-[More Information Needed]
-
-### Recommendations
-
-<!-- This section is meant to convey recommendations with respect to the bias, risk, and technical limitations. -->
-
-Users (both direct and downstream) should be made aware of the risks, biases and limitations of the model. More information needed for further recommendations.
-
-## How to Get Started with the Model
-
-Use the code below to get started with the model.
-
-[More Information Needed]
-
-## Training Details
-
-### Training Data
-
-<!-- This should link to a Dataset Card, perhaps with a short stub of information on what the training data is all about as well as documentation related to data pre-processing or additional filtering. -->
-
-[More Information Needed]
-
-### Training Procedure 
-
-<!-- This relates heavily to the Technical Specifications. Content here should link to that section when it is relevant to the training procedure. -->
-
-#### Preprocessing [optional]
-
-[More Information Needed]
-
-
-#### Training Hyperparameters
-
-- **Training regime:** [More Information Needed] <!--fp32, fp16 mixed precision, bf16 mixed precision, bf16 non-mixed precision, fp16 non-mixed precision, fp8 mixed precision -->
-
-#### Speeds, Sizes, Times [optional]
-
-<!-- This section provides information about throughput, start/end time, checkpoint size if relevant, etc. -->
-
-[More Information Needed]
-
-## Evaluation
-
-<!-- This section describes the evaluation protocols and provides the results. -->
-
-### Testing Data, Factors & Metrics
-
-#### Testing Data
-
-<!-- This should link to a Dataset Card if possible. -->
-
-[More Information Needed]
-
-#### Factors
-
-<!-- These are the things the evaluation is disaggregating by, e.g., subpopulations or domains. -->
-
-[More Information Needed]
-
-#### Metrics
-
-<!-- These are the evaluation metrics being used, ideally with a description of why. -->
-
-[More Information Needed]
-
-### Results
-
-[More Information Needed]
-
-#### Summary
-
-
-
-## Model Examination [optional]
-
-<!-- Relevant interpretability work for the model goes here -->
-
-[More Information Needed]
-
-## Environmental Impact
-
-<!-- Total emissions (in grams of CO2eq) and additional considerations, such as electricity usage, go here. Edit the suggested text below accordingly -->
-
-Carbon emissions can be estimated using the [Machine Learning Impact calculator](https://mlco2.github.io/impact#compute) presented in [Lacoste et al. (2019)](https://arxiv.org/abs/1910.09700).
-
-- **Hardware Type:** [More Information Needed]
-- **Hours used:** [More Information Needed]
-- **Cloud Provider:** [More Information Needed]
-- **Compute Region:** [More Information Needed]
-- **Carbon Emitted:** [More Information Needed]
-
-## Technical Specifications [optional]
-
-### Model Architecture and Objective
-
-[More Information Needed]
-
-### Compute Infrastructure
-
-[More Information Needed]
-
-#### Hardware
-
-[More Information Needed]
-
-#### Software
-
-[More Information Needed]
-
-## Citation [optional]
-
-<!-- If there is a paper or blog post introducing the model, the APA and Bibtex information for that should go in this section. -->
-
-**BibTeX:**
-
-[More Information Needed]
-
-**APA:**
-
-[More Information Needed]
-
-## Glossary [optional]
-
-<!-- If relevant, include terms and calculations in this section that can help readers understand the model or model card. -->
-
-[More Information Needed]
-
-## More Information [optional]
-
-[More Information Needed]
-
-## Model Card Authors [optional]
-
-[More Information Needed]
-
-## Model Card Contact
-
-[More Information Needed]
-
-
-### Framework versions
-
-- PEFT 0.8.2
