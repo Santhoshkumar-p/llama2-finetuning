@@ -1,4 +1,4 @@
-# AI PolicyChat
+# AIPolicyLlama: Fine-Tuning Llama2 for Enhanced AI Policy Document Analysis
 ## Introduction Motivation:
 Develop a fine-tuned Large Language Model that is capable of understanding and answering questions related to AI policy.
 
